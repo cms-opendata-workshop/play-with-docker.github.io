@@ -3,59 +3,73 @@ layout: home
 title: Play with Docker Classroom
 ---
 
+<script>
+  function setSelectedPWDURL() {
+      var selected = document.getElementById("Ultra").value;
+      localStorage.setItem('selected', selected); // store value to be used in post.html
+      var sel = document.getElementById("Ultra");
+      var opt = sel.options[sel.selectedIndex];
+      document.getElementById('chosen').value = opt.text == "Select a group" ? "No group chosen" : "You have chosen " + opt.text;
+  }
+</script>
 
+<style>
+  body {
+    background-color: #eee;
+  }
+  input {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: #eee;
+    color:red;
+  }
+  
+  .no-outline:focus {
+    outline: none;
+  }
+</style>
+
+<span>
+  <p><h3 id="ops">Start by choosing your assigned group</h3></p>
+<p>
 <div style="list-style-type:none;font-size:18px">
-  <span><p>The Play with Docker classroom brings you labs and tutorials that help you get hands-on experience using Docker.
-    In this classroom you will find a mix of labs and tutorials that will help Docker users, including SysAdmins, IT Pros, and Developers.
-    There is a mix of hands-on tutorials right in the browser, instructions on setting up and using Docker in your own environment, and resources about best practices for developing and deploying your own applications.</p>
-    <p>We recommend you start with one of our Getting Started Guides, and then explore the individual labs that explore many advanced features of Docker. For a comprehensive approach to understanding Docker, choose your preferred journey, <a href="#ops">IT Pros and System Administrators</a>, or <a href="#dev">Developers</a>.</p></span>
-    <h3 id="ops">Getting Started Walk-through for IT Pros and System Administrators</h3>
-    <p><em>Learn more about Docker, how it works and how it can help you deploy secure, scalable applications and save money along the way.</em></p>
+  <select id="Ultra" onchange="setSelectedPWDURL()">
+    <option value="https://labs.play-with-docker.com">Select a group</option>
+    <option value="http://pwd.cms-cloud.tk">Group A</option>
+    <option value="https://labs.play-with-docker.com">Group B</option>
+</select>
+<input id="chosen" type="text" class="Disable" value="No group chosen"/>
+</p></span>
+  <span><p>
+    Let's learn about Docker and why we're using it!
+    Regardless of what you encounter in this lesson, the definitive guide is any 
+    official documentation provided by <a href="https://www.docker.com/">Docker</a>.
+  </p>
+  </span>
+    <h3 id="ops">What is Docker?</h3>
+
+      <p><em>A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.</em></p>
+     
+      <p>In short, Docker allows a user to work in a computing environment that has been *frozen* with respect
+      to interdependent libraries and code and related tools. This means that you can use the same software
+      that analysts were using 10 years ago (for example) without downloading all the relevant 10-year-old
+      libraries. :)</p>
+
+      <h3 id="ops">What can I learn here?</h3>
+      <p> As much as we'd like, we can't give you a *complete* overview of Docker. However, we do hope to explain
+        why we run Docker in the way we do so that you gain some understanding. More specifically, we'll
+        be showing you how to set up Docker for not just this workshop, but for interfacing with the 
+        CMS open data in general</p>
+
+        <h3 id="ops">Let's dive in!</h3>
     <ul>
-      <li><a href="/ops-stage1">Stage 1: The Basics</a></li>
-      <p><em>Learn more about the core concepts of Docker and what it can do for your operations team, and help you understand the fundamental value proposition for Docker. Topics include:</em></p>
+      <li><a href="/ops-s1-hello">Stage 1: The Basics</a></li>
+      <p><em>Learn more about the core concepts of Docker and what it can do for your operations team, and help you understand the fundamental value proposition for Docker. Key points are:</em></p>
       <ul>
-        <li>Fundamentals of Docker</li>
-        <li>Deploying a multi-service application</li>
-      </ul><br/>
-      <li><a href="/ops-stage2">Stage 2: Digging Deeper</a></li>
-      <p><em>This stage will help you learn more about some of the advanced topics of Docker. Topics include:</em></p>
-      <ul>
-        <li>Security</li>
-        <li>Networking</li>
-        <li>Orchestration</li>
-      </ul><br/>
-      <li><a href="/ops-stage3">Stage 3: Moving to Production</a></li>
-      <p><em>This stage will give you the resources to deploy a production application, developer a strategy for integrating Docker into your production environment, and get recognized as a leader in your organization on implementing Docker. Topics include:</em></p>
-      <ul>
-        <li>Reference Implementations</li>
-        <li>Portability</li>
-        <li>Storage</li>
-        <li>Production anti-patterns</li>
-      </ul>
-    </ul>
-    <h3 id="dev">Getting Started Walk-through for Developers</h3>
-    <p><em>Learn the core concepts of Docker and how it can make building apps faster, easier, and more secure.</em>
-    <ul>
-      <li><a href="/dev-stage1">Stage 1: The Basics</a></li>
-      <p><em>This stage will teach you the basics. Topics include:</em></p>
-        <ul>
-          <li>Get you familiar with the core concepts of Docker</li>
-          <li>Show you how to build and deploy multi-service applications</li>
-        </ul><br/>
-      <li><a href="/dev-stage2">Stage 2: Digging Deeper</a></li>
-      <p><em>This stage show you how to incorporate Docker into your entire developer workflow. Topics include:</em></p>
-      <ul>
-        <li>Use Docker with various IDEs</li>
-        <li>Get started with Windows containers</li>
-        <li>Preparing your workflow</li>
-      </ul><br/>
-      <li><a href="/dev-stage3">Stage 3: Moving to Staging</a></li>
-      <p><em>This stage will include advanced topics designed to get you ready for production environments. Topics include:</em></p>
-      <ul>
-        <li>Deploy an application to a staging environment</li>
-        <li>Manage your staging environment with Docker Swarm Mode</li>
-        <li>Learn how to build a secure application</li>
+        <li>Docker is widely used these days in both industry and academic research</li>
+        <li>Docker is one way that you can interface with CMS data using the same computing tools as CMS collaborators</li>
       </ul><br/>
     </ul>
   
@@ -64,5 +78,3 @@ title: Play with Docker Classroom
   <br/>
   <a href="/alacart">Full list of individual labs</a>
 </div>
-
-  

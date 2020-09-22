@@ -28,6 +28,14 @@ layout: default
     <div class="splitter">
     </div>
 
+    <script>
+        var pwdurl = "https://labs.play-with-docker.com" // default
+        var selected = localStorage.getItem('selected');
+        if (selected != null) {
+           pwdurl = selected;
+        }
+    </script>
+
     <div class="panel-right">
         <span class="resize-warning">If the commandline doesn't appear in the terminal, make sure popups are enabled or try resizing the browser window.</span>
         {% for i in (1..terms) %}
@@ -70,14 +78,14 @@ layout: default
           console.log('In _config.yml, the site url does not match the url you are serving from, so no analytics were pushed.')
       }
     {% endif %}
-    pwd.newSession([{selector: '.term1'}, {selector: '.term2'}, {selector: '.term3'}], {baseUrl: '{{site.pwdurl}}', ImageName: '{{page.image}}'});
+    pwd.newSession([{selector: '.term1'}, {selector: '.term2'}, {selector: '.term3'}], {baseUrl: pwdurl, ImageName: '{{page.image}}'});
     $(".panel-left").resizable({
         handleSelector: ".splitter",
         resizeHeight: false,
         onDragEnd: pwd.resize.bind(pwd)
     });
     window.onbeforeunload = function(e) {
-        navigator.sendBeacon("{{site.pwdurl}}/sessions/" + pwd.sessionId + "/close");
+        navigator.sendBeacon(pwdurl + "/sessions/" + pwd.sessionId + "/close");
         return;
     }
 
