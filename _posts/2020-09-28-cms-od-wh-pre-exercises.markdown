@@ -37,7 +37,7 @@ uname -a
 docker container start <container ID>
 ```
 
-## 1.0 Running the CMS open data container
+## 2.0 Running the CMS open data container
 The [first pre-exercise set](https://cms-opendata-workshop.github.io/workshop-lesson-docker-preexercises/index.html) gives you an introduction to docker and how to use the CMS open data container images. If you are in this page, it is likely that you have encountered problems with setting up your docker environment or running the CMS open data container, and you do not have the [VM setup](https://cms-opendata-workshop.github.io/workshop-lesson-virtualmachine/) up and running either. 
 
 Here, you have a ready-made environment, which you can run in the screen to the right. Start by opening the CMS open data container (see all details in the tutorial section [Using docker with the CMS open data](https://cms-opendata-workshop.github.io/workshop-lesson-docker-preexercises/03-testing-docker-for-cms-opendata/index.html)):
@@ -68,8 +68,8 @@ and return to it with
 docker start -i myopendataproject
 ```
 
-## 1.1 Test and validate with a simple CMS analysis job
-Do as explained in tutorial section [Test and validate](https://cms-opendata-workshop.github.io/workshop-lesson-docker-preexercises/05-validation/index.html). Read it through carefully, this is only a listing of the commands to run in your docker terminal. This exercise requires some editing. You can do it on the screen to the right using the basic `vi` editor, or work in a separate page  http://docker.cms-cloud.ml/  (if you change to that page, remember to start the container first with `docker run -it --name myopendataproject --volume "/cvmfs:/cvmfs" cmsopendata/cmssw_5_3_32 /bin/bash`)
+## 2.1 Test and validate with a simple CMS analysis job
+Do as explained in the tutorial section [Test and validate](https://cms-opendata-workshop.github.io/workshop-lesson-docker-preexercises/05-validation/index.html). Read it through carefully, this is only a listing of the commands to run in your docker terminal. This exercise requires some editing. You can do it on the screen to the right using the basic `vi` editor, or work in a separate page  [http://docker.cms-cloud.ml/](http://docker.cms-cloud.ml/)  (if you change to that page, remember to start the container first with `docker run -it --name myopendataproject --volume "/cvmfs:/cvmfs" cmsopendata/cmssw_5_3_32 /bin/bash`)
 
 ```.term1
 mkdir Demo
@@ -85,13 +85,13 @@ Follow the instructions in [the tutorial](https://cms-opendata-workshop.github.i
 vi Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ```
 
-enter the edit mode typing `i`, do your edits, and save with `esc` `:wq`. 
+enter the edit mode typing `i`, do your edits, and save with `esc` `:wq` (and if it went wrong and you just want to get out of the editor without saving then `esc` `:q!`).
 
 Replace `file:myfile.root` with `root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root` to point to an example file.
 
-Change also the maximum number of events to 10.  I.e., change `-1`to `10` in `process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))`.
+Change also the maximum number of events to 10, i.e. change `-1`to `10` in `process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))`.
 
-If you do not get the editing to work, or if you mess up everything, you can modify the `demoanalyzer_cfg.py` file by clicking in the following in the terminal to the right. This work-around is nothing to be proud of, but it works :woman_shrugging: 
+If you do not get the editing to work, or if you mess up everything, you can modify the `demoanalyzer_cfg.py` file by clicking in the following in the terminal to the right. Click on the first line, and it will overwrite the current file. This work-around is nothing to be proud of, but it works... 
 
 ```.term1
 cat > Demo/DemoAnalyzer/demoanalyzer_cfg.py <<EOL     
@@ -124,14 +124,14 @@ Run the job with:
 cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ```
 
-## 1.2 Access a physics object collection in an analysis job
+## 2.2 Access a physics object collection in an analysis job
 The [tutorial set on CMSSW](https://cms-opendata-workshop.github.io/workshop-lesson-cmssw/index.html) gives a good introduction to some functionalities of the CMSSW which will be useful in this workshop. Read it through carefully. Again, as for the docker tutorial set, here we **only** list the commands, but do not repeat the instructions. Clicking in the commands is good for catching up, but to learn, go back to the tutorial pages. 
 
 To get access to a physics object collection, follow [this episode](https://cms-opendata-workshop.github.io/workshop-lesson-cmssw/04_source/index.html) of the tutorial.
 
-To add a muon collection, you need to modify the source code in `Demo/DemoAnalyzer/src/DemoAnalyzer.cc` and `Demo/DemoAnalyzer/BuildFile.xml`.
+To add a muon collection, you need to modify the source code in `Demo/DemoAnalyzer/src/DemoAnalyzer.cc` and `Demo/DemoAnalyzer/BuildFile.xml` as explained in the tutorial.
 
-Again, in case of trouble, modify the files with 
+Again, in case of trouble with editors, you can modify the `DemoAnalyzer.cc`file with 
 
 ```.term1
 cat > Demo/DemoAnalyzer/src/DemoAnalyzer.cc <<EOL     
@@ -318,6 +318,8 @@ DEFINE_FWK_MODULE(DemoAnalyzer);
 EOL
 ```
 
+Modify `BuildFile.xml`with:
+
 ```.term1
 cat > Demo/DemoAnalyzer/BuildFile.xml <<EOL     
 <use name="FWCore/Framework"/>
@@ -341,8 +343,8 @@ and run:
 cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ```
 
-## 1.3 Configuring a CMSSW analysis job
-The [CMSSW tutorial section on the configuration](https://cms-opendata-workshop.github.io/workshop-lesson-cmssw/05_configuration/index.html) explains how to change some parameter in the configuration file.
+## 2.3 Configuring a CMSSW analysis job
+The [CMSSW tutorial section on the configuration](https://cms-opendata-workshop.github.io/workshop-lesson-cmssw/05_configuration/index.html) explains how to change some parameters in the configuration file.
 
 You can change the output frequency with the `MessageLogger` parameters. Add the line `process.MessageLogger.cerr.FwkReport.reportEvery = 5` after the `load` line in `Demo/DemoAnalyzer/demoanalyzer_cfg.py`. Increase the number of events to 100. If you have problmes with editors, use the following
 
@@ -376,3 +378,41 @@ Run the job with:
 ```.term1
 cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ```
+
+## 2.4 Adding some already-available CMSSW code
+Following the tutorial, some already available CMSSW code can be added. Add a trigger a filter module to your configuration file as explained in the tutorial.
+
+```.term1
+cat > Demo/DemoAnalyzer/demoanalyzer_cfg.py <<EOL   
+import FWCore.ParameterSet.Config as cms
+
+process = cms.Process("Demo")
+
+process.load("FWCore.MessageService.MessageLogger_cfi")
+#process.MessageLogger.cerr.FwkReport.reportEvery = 5
+
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+
+process.source = cms.Source("PoolSource",
+   # replace 'myfile.root' with the source file you want to use
+   fileNames = cms.untracked.vstring(
+   #    'file:myfile.root'
+       'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root'
+   )
+)
+
+process.demo = cms.EDAnalyzer('DemoAnalyzer'
+)
+
+process.load("HLTrigger.HLTfilters.hltHighLevel_cfi")
+process.hltHighLevel.HLTPaths = cms.vstring('HLT_Mu15*')
+
+process.p = cms.Path(process.hltHighLevel+process.demo)
+EOL
+```
+Run the job with:
+```.term1
+cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
+```
+and see how filter has stopped processing of many events (less events with output from muons).
+
